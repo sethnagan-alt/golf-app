@@ -19,7 +19,7 @@ button{font:inherit;cursor:pointer}
 .b2{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
 .row2{display:flex;gap:8px;align-items:center;margin-top:8px}.row2 .b{margin:0;flex:1}
 .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;background:var(--card);border-radius:12px;padding:6px}
-.ic{width:44px;height:44px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:22px}
+.ic{width:44px;height:44px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:14px;font-weight:bold;}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .chip{padding:9px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font-size:14px}
 .chip.on{background:var(--tint);color:var(--ac);border-color:var(--ac)}
@@ -156,7 +156,7 @@ function updateLiveGPSUI(){
   const distanceBox = $('#liveDistanceBox');
   if(indicator){
     indicator.className = pos ? "gps-badge gps-active" : "gps-badge gps-searching";
-    indicator.innerHTML = pos ? `📡 GPS Active (±${gpsAccuracy}m)` : `🛰️ Seeking Satellites...`;
+    indicator.innerHTML = pos ? `GPS Active (plus/minus ${gpsAccuracy}m)` : `Seeking Satellites...`;
   }
   if(distanceBox && V.shotStartPos && pos){
     distanceBox.innerHTML = `${V.currentShotDistance} <span style="font-size:16px;">Yds</span>`;
@@ -170,7 +170,7 @@ function calculateAdvancedMetrics(){
     const stat = S.holeStats[k];
     totalHoles++;
     totalPutts += parseInt(stat.putts || 2);
-    if(stat.grid || stat.gir) greensHit++;
+    if(stat.gir) greensHit++;
     if(stat.fir !== 'N/A'){
       totalEligibleFairways++;
       if(stat.fir === 'Fairway') fairwaysHit++;
