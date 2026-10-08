@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Golf"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Golf tracker</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;--bg:transparent;--card:rgba(255,255,255,.94);--tx:#17321c;--mu:#4f6b55;--bd:#bfdcc3;--ac:#1d6fb8;--tint:#dcefff}
+#bg{position:fixed;inset:0;z-index:-1}#bg svg{width:100%;height:100%;display:block}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#9bd6ff;color:var(--tx);font:16px/1.4 -apple-system,system-ui,sans-serif}
+#app{max-width:480px;margin:0 auto;padding:12px}
+h1{font-size:26px;margin:4px 0 12px;color:#fff;text-shadow:0 2px 6px rgba(0,70,0,.7)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px}
+.l{font-size:13px;color:var(--mu);margin-bottom:4px}.mu{color:var(--mu);font-size:13px}
+input,select{width:100%;box-sizing:border-box;font:16px inherit;padding:10px;border:1px solid var(--bd);border-radius:8px;background:#fff;color:var(--tx)}
+button{font:inherit;cursor:pointer}
+.b{display:block;width:100%;border:0;border-radius:10px;padding:14px;font-weight:600;background:linear-gradient(#3aa64a,#2b8a3b);color:#fff;margin-bottom:8px;box-shadow:0 2px 6px rgba(0,60,0,.3)}
+.b2{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.row2{display:flex;gap:8px;align-items:center;margin-top:8px}.row2 .b{margin:0;flex:1}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;background:var(--card);border-radius:12px;padding:6px}
+.ic{width:44px;height:44px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:22px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{padding:9px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font-size:14px}
+.chip.on{background:var(--tint);color:var(--ac);border-color:var(--ac)}
+.pm{display:flex;align-items:center;gap:8px;background:var(--card);padding:4px 8px;border-radius:10px}.pm button{width:40px;height:40px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:20px}.pm b{min-width:20px;text-align:center}
+table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;margin-bottom:8px}td,th{text-align:center;padding:4px 0;border-top:1px solid var(--bd);font-weight:400}th{font-weight:600}td:first-child,th:first-child{text-align:left;width:42px;color:var(--mu)}
+textarea{width:100%;box-sizing:border-box;height:120px;font:13px monospace;border:1px solid var(--bd);border-radius:8px;padding:8px;resize:vertical}
+.collapsible-notes {margin-top:12px;}
+.notes-content {display:none;margin-top:8px;}
+.notes-content.show {display:block;}
+.gps-badge {display:inline-block;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;color:#fff;}
+.gps-active {background:#2b8a3b;}
+.gps-searching {background:#d9480f;}
+.stat-grid {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.stat-box {background:rgba(255,255,255,0.7);border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center;}
+.stat-val {font-size:22px;font-weight:bold;color:var(--tx);}
+</style></head><body><div id="bg" aria-hidden="true"><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fa9f5"/><stop offset="1" stop-color="#d4f0ff"/></linearGradient></defs><rect width="400" height="800" fill="url(#sk)"/><circle cx="318" cy="92" r="64" fill="#fff6b0" opacity=".5"/><circle cx="318" cy="92" r="40" fill="#ffe14d"/><g fill="#fff" opacity=".92"><ellipse cx="80" cy="120" rx="46" ry="16"/><ellipse cx="116" cy="106" rx="34" ry="16"/><ellipse cx="190" cy="190" rx="50" ry="15"/><ellipse cx="224" cy="178" rx="30" ry="14"/></g><path d="M0 420Q110 330 250 395T400 370V800H0Z" fill="#62bb5c"/><path d="M0 485Q160 400 400 470V800H0Z" fill="#3fa24b"/><g fill="#1f6d2c"><rect x="44" y="408" width="6" height="26" fill="#5a3b1e"/><circle cx="47" cy="400" r="22"/><rect x="340" y="420" width="6" height="26" fill="#5a3b1e"/><circle cx="343" cy="412" r="20"/><rect x="300" y="436" width="5" height="20" fill="#5a3b1e"/><circle cx="302" cy="430" r="16"/></g><path d="M0 540Q200 500 400 540V800H0Z" fill="#2e8b3d"/><g fill="#36994a" opacity=".7"><path d="M0 590Q200 550 400 590V630Q200 590 0 630Z"/><path d="M0 670Q200 630 400 670V710Q200 670 0 710Z"/></g><ellipse cx="200" cy="735" rx="170" ry="48" fill="#79d672"/><ellipse cx="236" cy="738" rx="10" ry="3.5" fill="#17321c"/><line x1="236" y1="736" x2="236" y2="580" stroke="#fff" stroke-width="3"/><polygon points="236,580 298,600 236,620" fill="#e53935"/><circle cx="170" cy="750" r="5" fill="#fff"/></svg></div>
+<div id="app"></div>
+<script>
+const CL=['Driver','3W','5W','Hybrid','4i','5i','6i','7i','8i','9i','PW','GW','SW','LW'];
+const WP=[5,3,4,4,5,3,4,4,4,4,4,3,4,5,3,4,5,3];
+const WPN='Willow Park Golf and Country Club';
+const TEES=['Black','Blue','Blue/White','White'];
+const YARD={};YARD[WPN]={'Black':[533,156,378,374,564,160,430,364,404,350,408,201,426,504,158,383,528,212],'Blue':[525,150,368,368,544,155,398,339,393,340,389,180,406,490,155,372,520,190],'Blue/White':[525,150,368,368,506,155,374,339,366,340,335,154,385,490,155,372,520,175],'White':[489,137,354,357,506,136,374,323,366,330,335,154,385,481,140,363,507,175]};
+const ydg=(c,t,n)=>YARD[c]&&YARD[c][t]?YARD[c][t][n-1]:null;
+const OTHER=['Shaganappi Point','McCall Lake','Maple Ridge','Confederation Park','Earl Grey','Canyon Meadows','Glencoe','Lakeside Greens'];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const yd=m=>Math.round(m*1.09361);
+
+function init(){
+  const c={};
+  c[WPN]=WP.slice();
+  OTHER.forEach(n=>c[n]=Array(18).fill(4));
+  return {hcp:'',courses:c,rounds:[],cur:null,club:'7i',tee:'Blue',notes:'',shotLogs:[],holeStats:{}}
+}
+
+function load(){
+  let s;
+  try{s=JSON.parse(localStorage.getItem('golf1'))}catch(e){}
+  const d=init();
+  if(!s)return d;
+  Object.keys(d.courses).forEach(k=>{if(!s.courses[k])s.courses[k]=d.courses[k]});
+  if(!s.tee)s.tee='Blue';
+  if(s.notes===undefined)s.notes='';
+  if(!s.shotLogs)s.shotLogs=[];
+  if(!s.holeStats)s.holeStats={};
+  return s;
+}
+
+let S=load();
+function save(){try{localStorage.setItem('golf1',JSON.stringify(S))}catch(e){}}
+
+let V={
+  n:'home',
+  hole:1,
+  course:WPN,
+  showNotes:false,
+  shotStartPos:null, 
+  currentShotDistance:0
+};
+
+let pos=null;
+let gpsAccuracy=null;
+
+function hav(a,b){
+  const R=6371000, r=Math.PI/180, p=(b.lat-a.lat)*r, q=(b.lng-a.lng)*r;
+  const k=Math.sin(p/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(q/2)**2;
+  return 2*R*Math.asin(Math.sqrt(k))
+}
+
+function watch(){
+  if(!navigator.geolocation)return;
+  try{
+    navigator.geolocation.watchPosition(p=>{
+      pos={lat:p.coords.latitude,lng:p.coords.longitude};
+      gpsAccuracy=Math.round(p.coords.accuracy);
+      if(V.shotStartPos && pos){
+        V.currentShotDistance = yd(hav(V.shotStartPos, pos));
+      }
+      updateLiveGPSUI();
+    },()=>{
+      pos=null;gpsAccuracy=null;updateLiveGPSUI();
+    },{enableHighAccuracy:true,maximumAge:1000})
+  }catch(e){}
+}
+
+function startShotTracking(){
+  if(!pos){alert("Still acquiring GPS satellite fix..."); return;}
+  V.shotStartPos = {lat: pos.lat, lng: pos.lng};
+  V.currentShotDistance = 0;
+  render();
+}
+
+function clearShotTracking(){
+  V.shotStartPos = null;
+  V.currentShotDistance = 0;
+  render();
+}
+
+function logShot(){
+  if(!V.shotStartPos || V.currentShotDistance <= 0) return;
+  S.shotLogs.push({
+    date: new Date().toLocaleDateString('en-CA'),
+    course: V.course,
+    hole: V.hole,
+    club: S.club,
+    distance: V.currentShotDistance
+  });
+  save();
+  alert(`Logged: ${S.club} -> ${V.currentShotDistance} yds!`);
+  clearShotTracking();
+}
+
+function setHoleStat(metric, val){
+  const key = `${V.course}_H${V.hole}`;
+  if(!S.holeStats[key]) S.holeStats[key] = {fir:'N/A', gir:false, putts:2};
+  S.holeStats[key][metric] = val;
+  save();
+  render();
+}
+
+function addCourse(){
+  const input=$('#newCourseName');
+  if(!input||!input.value.trim())return;
+  const name=input.value.trim();
+  if(!S.courses[name]){
+    S.courses[name]=Array(18).fill(4);
+    save();V.course=name;render();
+  }
+}
+
+function updateLiveGPSUI(){
+  const indicator = $('#gpsIndicator');
+  const distanceBox = $('#liveDistanceBox');
+  if(indicator){
+    indicator.className = pos ? "gps-badge gps-active" : "gps-badge gps-searching";
+    indicator.innerHTML = pos ? `📡 GPS Active (±${gpsAccuracy}m)` : `🛰️ Seeking Satellites...`;
+  }
+  if(distanceBox && V.shotStartPos && pos){
+    distanceBox.innerHTML = `${V.currentShotDistance} <span style="font-size:16px;">Yds</span>`;
+  }
+}
+
+function calculateAdvancedMetrics(){
+  let totalHoles = 0, fairwaysHit = 0, totalEligibleFairways = 0, greensHit = 0, totalPutts = 0;
+  
+  Object.keys(S.holeStats).forEach(k => {
+    const stat = S.holeStats[k];
+    totalHoles++;
+    totalPutts += parseInt(stat.putts || 2);
+    if(stat.grid || stat.gir) greensHit++;
+    if(stat.fir !== 'N/A'){
+      totalEligibleFairways++;
+      if(stat.fir === 'Fairway') fairwaysHit++;
+    }
+  });
+
+  const clubAgg = {};
+  CL.forEach(c => clubAgg[c] = { sum: 0, count: 0, max: 0 });
+  S.shotLogs.forEach(log => {
+    if(clubAgg[log.club]){
+      clubAgg[log.club].sum += log.distance;
+      clubAgg[log.club].count++;
+      if(log.distance > clubAgg[log.club].max) clubAgg[log.club].max = log.distance;
+    }
+  });
+
+  return {
